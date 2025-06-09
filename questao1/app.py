@@ -14,7 +14,7 @@ r = redis.Redis(
     port=16566,
     decode_responses=True,
     username="default",
-    password="*******",
+    password="gKEDcsp2osQrzVI0BkDp3X4iD1yg0l9m",
 )
 
 success = r.set('foo', 'bar')
@@ -86,7 +86,7 @@ def save_tasks(tasks):
     2. Serializar a lista de tarefas para JSON
     """
     try:
-        redis_client.set(TASKS_KEY, json.dump(tasks))
+        redis_client.set(TASKS_KEY, json.dumps(tasks))
         print(f"MOCK: Salvando {len(tasks)} tarefas no Redis")
         return True # Mudar para True após implementar
     
