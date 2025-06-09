@@ -32,7 +32,7 @@ print(result)
 # )
 
 # ALUNOS: Implementem esta função para conectar ao Redis
-redis_client = None  # Substitua pela configuração real do Redis
+redis_client = r
 
 TASKS_KEY = "todo_tasks"
 
@@ -43,9 +43,19 @@ def get_tasks():
     A função deve:
     1. Conectar ao Redis
     2. Buscar dados da chave TASKS_KEY
-    3. Deserializar o JSON
-    4. Retornar uma lista de tarefas
-    5. Tratar erros de conexão
+    """
+    try:
+        """4. Retornar uma lista de tarefas"""
+        tasks_dados = redis_client.get(TASKS_KEY)
+        if tasks_dados:
+            """3. Deserializar o JSON"""
+            return json.loads(tasks_dados)
+        return []
+    except Exception as e:
+        print(f'Erro ao buscar tarefas no redis {e}')
+        """5. Tratar erros de conexão"""
+    return []
+    """
     
     Formato esperado de retorno:
     [
@@ -74,10 +84,17 @@ def save_tasks(tasks):
     A função deve:
     1. Conectar ao Redis
     2. Serializar a lista de tarefas para JSON
-    3. Salvar na chave TASKS_KEY
-    4. Retornar True se sucesso, False se erro
-    5. Tratar erros de conexão
+    """
+    try:
+        redis_client.set(TASKS_KEY, json.dump(tasks))
+        return True
     
+    except Exception as e: #"""5. Tratar erros de conexão"""#
+        print(f'Erro ao salvar as tarefas {e}')
+        return False
+
+    """
+    4. Retornar True se sucesso, False se erro
     Parâmetros:
     - tasks: Lista de dicionários com as tarefas
     """
