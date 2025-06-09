@@ -1,12 +1,27 @@
 from flask import Flask, render_template, request, jsonify
-# import redis  # ALUNOS: Descomente esta linha e configure a conexão
+import redis
 import json
 import uuid
 from datetime import datetime
 
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'your-secret-key-here'
+app.config['SECRET_KEY'] = 'Gerson'
 
+
+
+r = redis.Redis(
+    host='redis-16566.c278.us-east-1-4.ec2.redns.redis-cloud.com',
+    port=16566,
+    decode_responses=True,
+    username="default",
+    password="*******",
+)
+
+success = r.set('foo', 'bar')
+# True
+
+result = r.get('foo')
+print(result)
 # CONFIGURAÇÃO REDIS - PARA SER IMPLEMENTADA PELOS ALUNOS
 # redis_client = redis.Redis(
 #     host='localhost',       # Substitua pelo host do seu Redis
