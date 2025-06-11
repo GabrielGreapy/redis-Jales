@@ -2,19 +2,21 @@ from flask import Flask, render_template, request, jsonify
 import redis
 import json
 import uuid
+import os
+from dotenv import load_dotenv
 from datetime import datetime
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'Gerson'
 
 
-
+load_dotenv()
 r = redis.Redis(
-    host='redis-16566.c278.us-east-1-4.ec2.redns.redis-cloud.com',
-    port=16566,
+    host= os.getenv('REDIS_HOST'),
+    port= os.getenv("REDIS_PORT"),
     decode_responses=True,
-    username="default",
-    password="gKEDcsp2osQrzVI0BkDp3X4iD1yg0l9m",
+    username= os.getenv("REDIS_USERNAME"),
+    password= os.getenv("REDIS_PASSWORD"),
 )
 
 success = r.set('foo', 'bar')
